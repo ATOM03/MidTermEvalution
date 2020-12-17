@@ -1,0 +1,16 @@
+.fifty-perent {
+  width: 50%;
+  margin: 0 10px;
+  flex-grow: 1;
+}
+#color-wheat {
+  padding: 20px;
+  background-color: whitesmoke;
+  font-family: sans-serif;
+}
+.flex-end {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
