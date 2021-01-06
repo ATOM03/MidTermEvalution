@@ -10,6 +10,9 @@ import Activity from "./Teaching&uniActivity/Activity";
 import ResearchandAcad from "./Research&Acadmic/Research&Acad";
 import PropTypes from "prop-types";
 import "./FormCreation.css";
+import store from "../FormCreation/Redux/Store";
+import { changeValue } from "../FormCreation/Redux/Value/ValueAction";
+import { useSelector, useDispatch } from "react-redux";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -62,9 +65,13 @@ const useStyles = makeStyles((theme) => ({
 export default function FormCreation() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
+  // console.log(store.getState());
+  const tabValue = useSelector((state) => state.value.value);
+  const dispatch = useDispatch();
+  // console.log(tabValue);
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    dispatch(changeValue(newValue));
+    // setValue(newValue);
   };
 
   return (
@@ -94,7 +101,7 @@ export default function FormCreation() {
               <Tabs
                 orientation="vertical"
                 variant="scrollable"
-                value={value}
+                value={tabValue}
                 onChange={handleChange}
                 aria-label="Vertical tabs example"
                 className={classes.tabs}
@@ -126,16 +133,16 @@ export default function FormCreation() {
         </Grid>
 
         <Grid item xs={10}>
-          <TabPanel value={value} index={0}>
+          <TabPanel value={tabValue} index={0}>
             <BasicInfo />
           </TabPanel>
-          <TabPanel value={value} index={1}>
+          <TabPanel value={tabValue} index={1}>
             <Academic />
           </TabPanel>
-          <TabPanel value={value} index={2}>
+          <TabPanel value={tabValue} index={2}>
             <Activity />
           </TabPanel>
-          <TabPanel value={value} index={3}>
+          <TabPanel value={tabValue} index={3}>
             <ResearchandAcad />
           </TabPanel>
           {/* <TabPanel value={value} index={4}>

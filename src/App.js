@@ -1,12 +1,21 @@
 import logo from "./logo.svg";
 import "./App.css";
-import FormCreation from "./Components/FormCreation/FormCreation";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Temp from "./Components/FormCreation/Temp";
+import Login from "./Components/FormCreation/Login/Login";
+import { Provider } from "react-redux";
+import store from "./Components/FormCreation/Redux/Store";
 
 function App() {
   return (
-    <div style={{ fontFamily: "sans-serif", height: "100vh" }}>
-      <FormCreation />
-    </div>
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route exact path="/form" component={Temp} />
+          <Route exact path="/cards" component={Login} />
+        </Switch>
+      </Router>
+    </Provider>
   );
 }
 

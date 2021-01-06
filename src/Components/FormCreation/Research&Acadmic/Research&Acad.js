@@ -1,7 +1,10 @@
 import React from "react";
 import { Card, InputBase, Button } from "@material-ui/core/";
+import { changeValue } from "../Redux/Value/ValueAction";
+import { useDispatch } from "react-redux";
 // import "./Academic.css";
 function ResearchandAcad(props) {
+  const dispatch = useDispatch();
   return (
     <div>
       <Card id="color-wheat">
@@ -214,8 +217,9 @@ function ResearchandAcad(props) {
           variant="contained"
           color="primary"
           style={{ marginRight: "30px" }}
+          // onClick={() => dispatch(changeValue(0))}
         >
-          Next
+          Submit
         </Button>
       </div>
     </div>
