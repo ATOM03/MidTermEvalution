@@ -25,11 +25,14 @@ function ReportGenerater(props) {
   return (
     <div>
       <Card id="color-wheat">
-        <div>
+        <div style={{ marginLeft: "30px" }}>
           <h2>Generate Report</h2>
         </div>
 
-        <div className="flex-end" style={{ justifyContent: "flex-start" }}>
+        <div
+          className="flex-end"
+          style={{ justifyContent: "flex-start", marginLeft: "30px" }}
+        >
           <Button
             variant="contained"
             color="primary"

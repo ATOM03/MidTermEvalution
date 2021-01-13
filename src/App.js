@@ -12,7 +12,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/form" component={Temp} />
-          <Route exact path="/cards" component={Login} />
+          <Route exact path="/" component={Login} />
         </Switch>
       </Router>
     </Provider>

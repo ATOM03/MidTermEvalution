@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Tabs, Tab, Typography, Box } from "@material-ui/core/";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
@@ -128,16 +129,19 @@ export default function FormCreation() {
             </div>
             <div className="setting">
               <h4>
-                <HelpOutlineIcon />
-                Help
-              </h4>
-              <h4>
-                <SettingsIcon />
-                Settings
-              </h4>
-              <h4>
-                <ExitToAppIcon />
-                Sign out
+                <Link
+                  to="/"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textDecoration: "none",
+                    color: "white",
+                  }}
+                >
+                  <ExitToAppIcon />
+                  Sign out
+                </Link>
               </h4>
             </div>
           </div>
