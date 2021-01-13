@@ -1,0 +1,1 @@
+export const RESEARCH_TYPE = "RESEARCH_TYPE";

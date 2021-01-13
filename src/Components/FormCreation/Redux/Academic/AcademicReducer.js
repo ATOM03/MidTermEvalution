@@ -1,7 +1,9 @@
 import { ACADEMIC_TYPE } from "./Academictype";
 
 const intialState = {
-  QualificationDetails: [],
+  QualificationDetails: [
+    { degree: "", subject: "", year: "", university: "", state: "" },
+  ],
   FieldofSpecialization: "",
   PGyear: "",
   UGyear: "",

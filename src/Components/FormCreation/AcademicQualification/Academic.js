@@ -7,19 +7,16 @@ import { useDispatch, useSelector } from "react-redux";
 function Academic(props) {
   const Academic = useSelector((state) => state.Academicinfo);
   console.log(Academic);
-  const [degree, setDegree] = useState("");
-  const [subject, setSubject] = useState("");
-  const [year, setYear] = useState("");
-  const [university, setUniverstiy] = useState("");
-  const [state, setState] = useState("");
   const [fieldofspecialization, setFieldofspecialization] = useState(
     Academic.FieldofSpecialization
   );
+  const [arraylist, setArrayList] = useState(Academic.QualificationDetails);
   const [pgyear, setPgyear] = useState(Academic.PGyear);
   const [ugyear, setUgyear] = useState(Academic.UGyear);
   const [researchyear, setResearchyear] = useState(Academic.Researchyear);
   const [industryyear, setIndustryyear] = useState(Academic.Industryyear);
   const dispatch = useDispatch();
+  console.log(arraylist);
   return (
     <div>
       <Card id="color-wheat">
@@ -29,110 +26,161 @@ function Academic(props) {
         <div>
           <h4>Details of Qualification</h4>
         </div>
-        <div style={{ width: "100%", display: "flex", flexDirection: "row" }}>
-          <div className="flex">
-            <div className="flex margin-academic">
-              <p>Degree: </p>
-              <InputBase
-                style={{
-                  marginTop: "10px",
-                  display: "flex",
-                  backgroundColor: "white",
-                  paddingLeft: "10px",
-                  height: "35px",
-                  borderRadius: "5px",
-                  width: "90px",
-                  marginLeft: "10px",
-                }}
-                value={degree}
-                onChange={(e) => setDegree(e.target.value)}
-                placeholder="Degree"
-                required
-              />
-            </div>
-            <div className="flex margin-academic">
-              <p>
-                Subject/Title of <br /> Dissertation/Thesis{" "}
-              </p>
-              <InputBase
-                style={{
-                  marginTop: "10px",
-                  display: "flex",
-                  backgroundColor: "white",
-                  paddingLeft: "10px",
-                  height: "35px",
-                  borderRadius: "5px",
-                  width: "90px",
-                  marginLeft: "10px",
-                }}
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-                placeholder="Subject"
-                required
-              />
-            </div>
-            <div className="flex margin-academic">
-              <p>Year of Award </p>
-              <InputBase
-                style={{
-                  marginTop: "10px",
-                  display: "flex",
-                  backgroundColor: "white",
-                  paddingLeft: "10px",
-                  height: "35px",
-                  borderRadius: "5px",
-                  //   width: "90px",
-                  marginLeft: "10px",
-                }}
-                value={year}
-                onChange={(e) => setYear(e.target.value)}
-                placeholder="Year of the Award"
-                required
-              />
-            </div>
+        {arraylist.map((key, index) => (
+          <div style={{ width: "100%", display: "flex", flexDirection: "row" }}>
+            <div className="flex">
+              <div className="flex margin-academic">
+                <p>Degree: </p>
+                <InputBase
+                  style={{
+                    marginTop: "10px",
+                    display: "flex",
+                    backgroundColor: "white",
+                    paddingLeft: "10px",
+                    height: "35px",
+                    borderRadius: "5px",
+                    width: "90px",
+                    marginLeft: "10px",
+                  }}
+                  value={arraylist[index].degree}
+                  onChange={(e) => {
+                    // setDegree(e.target.value);
+                    let newarraylist = [...arraylist];
+                    newarraylist[index].degree = e.target.value;
+                    setArrayList(newarraylist);
+                  }}
+                  placeholder="Degree"
+                  required
+                />
+              </div>
+              <div className="flex margin-academic">
+                <p>
+                  Subject/Title of <br /> Dissertation/Thesis{" "}
+                </p>
+                <InputBase
+                  style={{
+                    marginTop: "10px",
+                    display: "flex",
+                    backgroundColor: "white",
+                    paddingLeft: "10px",
+                    height: "35px",
+                    borderRadius: "5px",
+                    width: "90px",
+                    marginLeft: "10px",
+                  }}
+                  value={arraylist[index].subject}
+                  onChange={(e) => {
+                    let newarraylist = [...arraylist];
+                    newarraylist[index].subject = e.target.value;
+                    setArrayList(newarraylist);
+                  }}
+                  placeholder="Subject"
+                  required
+                />
+              </div>
+              <div className="flex margin-academic">
+                <p>Year of Award </p>
+                <InputBase
+                  style={{
+                    marginTop: "10px",
+                    display: "flex",
+                    backgroundColor: "white",
+                    paddingLeft: "10px",
+                    height: "35px",
+                    borderRadius: "5px",
+                    //   width: "90px",
+                    marginLeft: "10px",
+                  }}
+                  value={arraylist[index].year}
+                  onChange={(e) => {
+                    let newarraylist = [...arraylist];
+                    newarraylist[index].year = e.target.value;
+                    setArrayList(newarraylist);
+                  }}
+                  placeholder="Year of the Award"
+                  required
+                />
+              </div>
 
-            <div className="flex margin-academic">
-              <p>University: </p>
-              <InputBase
-                style={{
-                  marginTop: "10px",
-                  display: "flex",
-                  backgroundColor: "white",
-                  paddingLeft: "10px",
-                  height: "35px",
-                  borderRadius: "5px",
-                  //   width: "90px",
-                }}
-                value={university}
-                onChange={(e) => setUniverstiy(e.target.value)}
-                placeholder="University"
-                required
-              />
-            </div>
-            <div className="flex margin-academic">
-              <p>State: </p>
-              <InputBase
-                style={{
-                  marginTop: "10px",
-                  display: "flex",
-                  backgroundColor: "white",
-                  paddingLeft: "10px",
-                  height: "35px",
-                  borderRadius: "5px",
-                  //   width: "90px",
-                  marginLeft: "10px",
-                }}
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                placeholder="State"
-                required
-              />
+              <div className="flex margin-academic">
+                <p>University: </p>
+                <InputBase
+                  style={{
+                    marginTop: "10px",
+                    display: "flex",
+                    backgroundColor: "white",
+                    paddingLeft: "10px",
+                    height: "35px",
+                    borderRadius: "5px",
+                    //   width: "90px",
+                  }}
+                  value={arraylist[index].university}
+                  onChange={(e) => {
+                    let newarraylist = [...arraylist];
+                    newarraylist[index].university = e.target.value;
+                    setArrayList(newarraylist);
+                  }}
+                  placeholder="University"
+                  required
+                />
+              </div>
+              <div className="flex margin-academic">
+                <p>State: </p>
+                <InputBase
+                  style={{
+                    marginTop: "10px",
+                    display: "flex",
+                    backgroundColor: "white",
+                    paddingLeft: "10px",
+                    height: "35px",
+                    borderRadius: "5px",
+                    //   width: "90px",
+                    marginLeft: "10px",
+                  }}
+                  value={arraylist[index].state}
+                  onChange={(e) => {
+                    let newarraylist = [...arraylist];
+                    newarraylist[index].state = e.target.value;
+                    setArrayList(newarraylist);
+                  }}
+                  placeholder="State"
+                  required
+                />
+              </div>
             </div>
           </div>
-        </div>
+        ))}
         <div className="flex-end">
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{
+              marginRight: "10px",
+            }}
+            onClick={() => {
+              let newarraylist = [...arraylist];
+              newarraylist.push({
+                degree: "",
+                subject: "",
+                year: "",
+                university: "",
+                state: "",
+              });
+              setArrayList(newarraylist);
+            }}
+          >
             Add New
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              let newarraylist = [...arraylist];
+              newarraylist.pop();
+              setArrayList(newarraylist);
+            }}
+          >
+            Remove Last
           </Button>
         </div>
         <div style={{ width: "100%", display: "flex", flexDirection: "row" }}>
@@ -239,7 +287,7 @@ function Academic(props) {
             dispatch(changeValue(2));
             dispatch(
               storeAcademicInfo(
-                [{ degree, subject, year, university, state }],
+                arraylist,
                 fieldofspecialization,
                 pgyear,
                 ugyear,

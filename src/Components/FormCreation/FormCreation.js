@@ -13,6 +13,7 @@ import "./FormCreation.css";
 import store from "../FormCreation/Redux/Store";
 import { changeValue } from "../FormCreation/Redux/Value/ValueAction";
 import { useSelector, useDispatch } from "react-redux";
+import ReportGenerater from "./ReportGenerater/ReportGenerater";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -27,7 +28,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={0}>
-          <Typography>{children}</Typography>
+          <Typography style={{ textAlign: "left" }}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -58,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '"#1d2e3b',
     color: "white",
     width: "100%",
+    textAlign: "left",
     // borderRight: `1px solid ${theme.palette.divider}`,
   },
 }));
@@ -81,7 +83,12 @@ export default function FormCreation() {
         <Grid
           item
           xs={2}
-          style={{ height: "100%", backgroundColor: "#1d2e3b", color: "white" }}
+          style={{
+            height: "100%",
+            backgroundColor: "#1d2e3b",
+            color: "white",
+            position: "fixed",
+          }}
         >
           <div className="center">
             <h2>
@@ -106,13 +113,17 @@ export default function FormCreation() {
                 aria-label="Vertical tabs example"
                 className={classes.tabs}
               >
-                <Tab label="Basic Information" {...a11yProps(0)} />
+                <Tab
+                  label="Basic Information"
+                  {...a11yProps(0)}
+                  style={{ textAlign: "left" }}
+                />
                 <Tab label="Academic Qualification" {...a11yProps(1)} />
                 <Tab label="Teaching & University Activity" {...a11yProps(2)} />
                 <Tab label="Academic/Research Purpose" {...a11yProps(3)} />
-                {/* <Tab label="Item Five" {...a11yProps(4)} />
-                <Tab label="Item Six" {...a11yProps(5)} />
-                <Tab label="Item Seven" {...a11yProps(6)} /> */}
+                <Tab label="Generate Report" {...a11yProps(4)} />
+                {/* <Tab label="Item Six" {...a11yProps(5)} /> */}
+                {/* <Tab label="Item Seven" {...a11yProps(6)} />  */}
               </Tabs>
             </div>
             <div className="setting">
@@ -132,7 +143,7 @@ export default function FormCreation() {
           </div>
         </Grid>
 
-        <Grid item xs={10}>
+        <Grid item xs={10} style={{ marginLeft: "250px" }}>
           <TabPanel value={tabValue} index={0}>
             <BasicInfo />
           </TabPanel>
@@ -144,6 +155,9 @@ export default function FormCreation() {
           </TabPanel>
           <TabPanel value={tabValue} index={3}>
             <ResearchandAcad />
+          </TabPanel>
+          <TabPanel value={tabValue} index={4}>
+            <ReportGenerater />
           </TabPanel>
           {/* <TabPanel value={value} index={4}>
             Item Five

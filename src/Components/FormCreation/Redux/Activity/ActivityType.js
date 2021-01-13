@@ -1,0 +1,1 @@
+export const ACTIVITY_TYPE = "ACTIVITY_TYPE";
