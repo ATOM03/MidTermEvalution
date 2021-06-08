@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { Button, Card, InputBase, makeStyles, fade } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  InputBase,
+  makeStyles,
+  fade,
+  Snackbar,
+} from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import MuiAlert from "@material-ui/lab/Alert";
 import axios from "axios";
 import "./Login.scss";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyle = makeStyles((theme) => ({
   loginButton: {
@@ -179,14 +191,27 @@ const useStyle = makeStyles((theme) => ({
 function Login(props) {
   const inClassStyle = useStyle();
 
-  const [username, setUsername] = useState("");
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isTeacher, setIsTeacher] = useState(false);
   const getData = () => {
     axios
-      .post("http://localhost:8000/login", { username, password })
+      .post("http://localhost:8000/login", { email, password })
       .then((res) => {
+        if (!res.data.payload.success) {
+          setMessage(res.data.payload.message);
+          setOpen(true);
+        } else {
+          setIsTeacher(res.data.payload.isTeacher);
+          setStatus(res.data.payload.success);
+          localStorage.setItem("token", res.data.payload.token);
+        }
+      })
+      .catch((res) => {
         console.log(res);
       });
   };
@@ -198,6 +223,8 @@ function Login(props) {
       x.type = "password";
     }
   };
+
+  console.log(isTeacher, status);
   if (status === false) {
     return (
       <div className={inClassStyle.Flexbox}>
@@ -209,7 +236,7 @@ function Login(props) {
           <form className={inClassStyle.loginForm}>
             <h1>Sign In</h1>
             <div className={inClassStyle.inputFlexColumn}>
-              <h3>Username</h3>
+              <h3>Email</h3>
               <div className={inClassStyle.search}>
                 <InputBase
                   placeholder="Username"
@@ -217,10 +244,10 @@ function Login(props) {
                     root: inClassStyle.rootInput,
                     input: inClassStyle.input,
                   }}
-                  value={username}
+                  value={email}
                   inputProps={{ "aria-label": "search" }}
                   onChange={(e) => {
-                    setUsername(e.target.value);
+                    setEmail(e.target.value);
                   }}
                 />
               </div>
@@ -283,10 +310,25 @@ function Login(props) {
             </div>
           </form>
         </Card>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={() => setOpen(false)}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+        >
+          <Alert onClose={() => setOpen(false)} severity="error">
+            {message}
+          </Alert>
+        </Snackbar>
       </div>
     );
-  } else if (status === true) {
+  } else if (status === true && isTeacher === false) {
     return <Redirect to="/form" />;
+  } else if (status === true && isTeacher === true) {
+    return <Redirect to="/teacher" />;
   }
 }
 
