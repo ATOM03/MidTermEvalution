@@ -6,16 +6,10 @@ import {
   InputBase,
   makeStyles,
   fade,
-  Snackbar,
+  Checkbox,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import MuiAlert from "@material-ui/lab/Alert";
 import axios from "axios";
-import "./Login.scss";
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 const useStyle = makeStyles((theme) => ({
   loginButton: {
@@ -188,31 +182,28 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-function Login(props) {
+function Register(props) {
   const inClassStyle = useStyle();
-
-  const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isTeacher, setIsTeacher] = useState(false);
   const [status, setStatus] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [isTeacher, setIsTeacher] = useState(false);
   const getData = () => {
     axios
-      .post("http://localhost:8000/login", { email, password })
-      .then((res) => {
-        if (!res.data.payload.success) {
-          setMessage(res.data.payload.message);
-          setOpen(true);
-        } else {
-          setIsTeacher(res.data.payload.isTeacher);
-          setStatus(res.data.payload.success);
-          localStorage.setItem("token", res.data.payload.token);
-        }
+      .post("http://localhost:8000/register", {
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+        isTeacher,
       })
-      .catch((res) => {
-        console.log(res);
+      .then((res) => {
+        setStatus(res.data.payload.success);
       });
   };
   const texttopassword = () => {
@@ -223,8 +214,6 @@ function Login(props) {
       x.type = "password";
     }
   };
-
-  console.log(isTeacher, status);
   if (status === false) {
     return (
       <div className={inClassStyle.Flexbox}>
@@ -236,7 +225,41 @@ function Login(props) {
           <form className={inClassStyle.loginForm}>
             <h1>Sign In</h1>
             <div className={inClassStyle.inputFlexColumn}>
-              <h3>Email</h3>
+              <h3>FirstName</h3>
+              <div className={inClassStyle.search}>
+                <InputBase
+                  placeholder="Username"
+                  classes={{
+                    root: inClassStyle.rootInput,
+                    input: inClassStyle.input,
+                  }}
+                  value={firstName}
+                  inputProps={{ "aria-label": "search" }}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className={inClassStyle.inputFlexColumn}>
+              <h3>LastName</h3>
+              <div className={inClassStyle.search}>
+                <InputBase
+                  placeholder="Username"
+                  classes={{
+                    root: inClassStyle.rootInput,
+                    input: inClassStyle.input,
+                  }}
+                  value={lastName}
+                  inputProps={{ "aria-label": "search" }}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className={inClassStyle.inputFlexColumn}>
+              <h3>Eamil</h3>
               <div className={inClassStyle.search}>
                 <InputBase
                   placeholder="Username"
@@ -294,8 +317,56 @@ function Login(props) {
                 )}
               </div>
             </div>
-            <div className="SignUP">
-              <Link to="/register">Sign up</Link>
+            <div className={inClassStyle.inputFlexColumn}>
+              <h3>Confirm Password</h3>
+              <div className={inClassStyle.search}>
+                <InputBase
+                  id="loginpassword"
+                  placeholder="Password"
+                  classes={{
+                    root: inClassStyle.rootInput,
+                    input: inClassStyle.input,
+                  }}
+                  value={confirmPassword}
+                  type="password"
+                  inputProps={{ "aria-label": "password" }}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                  }}
+                />
+
+                {passwordVisible ? (
+                  <div className={inClassStyle.errorDiv}>
+                    <Visibility
+                      onClick={() => {
+                        setPasswordVisible(false);
+                        texttopassword();
+                      }}
+                      classes={{
+                        root: inClassStyle.passwordColor,
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className={inClassStyle.errorDiv}>
+                    <VisibilityOff
+                      onClick={() => {
+                        setPasswordVisible(true);
+                        texttopassword();
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+            <div>
+              <Checkbox
+                checked={isTeacher}
+                onChange={() => setIsTeacher((prev) => !prev)}
+                color="primary"
+                inputProps={{ "aria-label": "primary checkbox" }}
+              />
+              Are you a Teacher?
             </div>
             <div className={inClassStyle.LoginButton}>
               <Button
@@ -305,31 +376,16 @@ function Login(props) {
                 }}
                 onClick={getData}
               >
-                Login
+                Register
               </Button>
             </div>
           </form>
         </Card>
-        <Snackbar
-          open={open}
-          autoHideDuration={6000}
-          onClose={() => setOpen(false)}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-        >
-          <Alert onClose={() => setOpen(false)} severity="error">
-            {message}
-          </Alert>
-        </Snackbar>
       </div>
     );
-  } else if (status === true && isTeacher === false) {
-    return <Redirect to="/form" />;
-  } else if (status === true && isTeacher === true) {
-    return <Redirect to="/teacher" />;
+  } else if (status === true) {
+    return <Redirect to="/" />;
   }
 }
 
-export default Login;
+export default Register;

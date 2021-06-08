@@ -1,0 +1,50 @@
+.outerSideBar {
+  position: relative;
+  height: 100%;
+  width: 300px;
+  left: 0;
+  background: white;
+  //   box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, 0.2);
+  .innerSideBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .MenuItems {
+      .MuiList {
+        &-root {
+          width: 300px;
+          height: 400px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+        }
+      }
+      .MuiMenuItem {
+        &-root {
+          padding-left: 40px;
+          font-size: 20px;
+          font-family: sans-serif;
+          font-family: 500;
+        }
+        :hover {
+          background-color: #9b59b6;
+        }
+      }
+      .MuiSvgIcon {
+        &-root {
+          margin-right: 20px;
+          font-size: 35px;
+          transition: 0.5s;
+        }
+      }
+      h4 {
+        font-weight: 500;
+      }
+    }
+    .active {
+      color: #3742fa;
+    }
+  }
+}
