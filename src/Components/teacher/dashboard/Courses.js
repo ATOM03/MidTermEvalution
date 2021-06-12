@@ -12,6 +12,9 @@ function Courses(props) {
           <h2>{props.courseCode}</h2>
           <p>{props.courseName}</p>
           <p>
+            Semester : <span>{props.semester}</span>
+          </p>
+          <p>
             Number of Students : <span>{props.numberOfStudents}</span>
           </p>
         </Card>

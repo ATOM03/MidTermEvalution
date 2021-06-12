@@ -11,11 +11,11 @@ function ReportGenerater(props) {
   const [statusNaac, setStatusNaac] = useState(false);
   const [data, setData] = useState({});
   const getData = () => {
-    fetch("http://localhost:8000/selfAprraisalReport")
+    fetch("http://localhost:8000/form/selfAprraisalReport")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
-        setData(data.data);
+        console.log(data.payload.data);
+        setData(data.payload.data);
         setStatusSelf(true);
       })
       .catch((e) => {

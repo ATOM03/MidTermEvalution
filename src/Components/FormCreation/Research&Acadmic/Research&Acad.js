@@ -20,11 +20,11 @@ function ResearchandAcad(props) {
   const postData = async () => {
     console.log(data);
     axios
-      .post(`http://localhost:8000/post`, data)
+      .post(`http://localhost:8000/form/post`, data)
       .then((res) => {
         console.log(res);
         console.log(res.data);
-        setError(res.data.message);
+        setError(res.data.payload.message);
         setOpen(true);
       })
       .catch((e) => {

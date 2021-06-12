@@ -28,6 +28,7 @@ function Dashboad(props) {
   const [open, setOpen] = React.useState(false);
   const [courseName, setCourseName] = useState("");
   const [courseCode, setCourseCode] = useState("");
+  const [semester, setSemester] = useState("");
   useEffect(() => {
     axios
       .get("http://localhost:8000/course")
@@ -73,6 +74,7 @@ function Dashboad(props) {
                     courseCode={course.courseCode}
                     courseName={course.courseName}
                     numberOfStudents={course.numberOfStudent}
+                    semester={course.semester}
                     index={index}
                   />
                 ))
@@ -132,6 +134,23 @@ function Dashboad(props) {
                     />
                   </div>
                 </div>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <div>
+                    <h4>Semester</h4>
+                  </div>
+                  <div className="inputSearch">
+                    <InputBase
+                      value={semester}
+                      type="Number"
+                      classes={{
+                        root: classes.root,
+                      }}
+                      onChange={(e) => setSemester(e.target.value)}
+                    />
+                  </div>
+                </div>
               </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -142,11 +161,13 @@ function Dashboad(props) {
                     .post("http://localhost:8000/course/addCourse", {
                       courseCode,
                       courseName,
+                      semester,
                     })
                     .then((res) => {
                       console.log(res);
                       setCourseCode("");
                       setCourseName("");
+                      setSemester("");
                       setOpen(false);
                     });
                 }}
