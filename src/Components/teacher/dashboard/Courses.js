@@ -7,7 +7,7 @@ function Courses(props) {
   console.log(props.index);
   return (
     <div className="courses">
-      <Link to={`/courses/${props.courseCode}`}>
+      <Link to={`/courses/${props.courseCode}/${props.semester}`}>
         <Card raised="true">
           <h2>{props.courseCode}</h2>
           <p>{props.courseName}</p>

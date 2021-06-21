@@ -18,7 +18,7 @@
       .MuiList {
         &-root {
           width: 300px;
-          height: 400px;
+          // height: 400px;
           display: flex;
           flex-direction: column;
           justify-content: space-evenly;
@@ -31,9 +31,24 @@
           font-size: 20px;
           font-family: "Poppins";
           font-family: 500;
+
+          a {
+            text-decoration: none;
+            color: black;
+            display: flex;
+            /* justify-content: center; */
+            align-items: center;
+          }
         }
         :hover {
           background-color: #9b59b6;
+        }
+        a {
+          text-decoration: none;
+          color: black;
+          display: flex;
+          /* justify-content: center; */
+          align-items: center;
         }
       }
       .MuiSvgIcon {
