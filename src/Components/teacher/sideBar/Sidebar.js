@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { MenuList, MenuItem, Icon } from "@material-ui/core";
 import ImportContactsIcon from "@material-ui/icons/ImportContacts";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
@@ -15,7 +16,7 @@ function Sidebar(props) {
         <h2>IPU</h2>
         <div className="MenuItems">
           <MenuList>
-            <MenuItem
+            {/* <MenuItem
               onClick={() => {
                 setCourseActive(!courseActive);
                 setAddStudentActive(false);
@@ -34,7 +35,7 @@ function Sidebar(props) {
             >
               <PersonAddIcon className={addStudentActive ? "active" : ""} />
               <h4>Add Student</h4>
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem
               onClick={() => {
                 setCourseActive(false);
@@ -42,10 +43,13 @@ function Sidebar(props) {
                 setGenerateReportActive(!generateReportActive);
               }}
             >
-              <AssessmentIcon
-                className={generateReportActive ? "active" : ""}
-              />
-              <h4>Generate Report</h4>
+              <Link to="/form">
+                <AssessmentIcon
+                  className={generateReportActive ? "active" : ""}
+                />
+
+                <h4>Generate Report</h4>
+              </Link>
             </MenuItem>
           </MenuList>
         </div>
