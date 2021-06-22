@@ -209,10 +209,13 @@ function Login(props) {
           setIsTeacher(res.data.payload.isTeacher);
           setStatus(res.data.payload.success);
           localStorage.setItem("token", res.data.payload.token);
+          localStorage.setItem("email", email);
         }
       })
       .catch((res) => {
         console.log(res);
+        setMessage(res);
+        setOpen(true);
       });
   };
   const texttopassword = () => {
@@ -326,7 +329,7 @@ function Login(props) {
       </div>
     );
   } else if (status === true && isTeacher === false) {
-    return <Redirect to="/form" />;
+    return <Redirect to="/student" />;
   } else if (status === true && isTeacher === true) {
     return <Redirect to="/teacher" />;
   }

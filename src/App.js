@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import store from "./Components/FormCreation/Redux/Store";
 import Dashboad from "./Components/teacher/dashboard/Dashboad";
 import Student from "./Components/teacher/student/Student";
+import StudentDashboard from "./Components/student/dashBoard/StudentDashboard";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/teacher" component={Dashboad} />
+          <Route exact path="/student" component={StudentDashboard} />
           <Route
             exact
             path="/courses/:coursename/:semester"
