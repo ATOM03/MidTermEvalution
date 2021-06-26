@@ -22,7 +22,7 @@ function App() {
           <Route exact path="/student" component={StudentDashboard} />
           <Route
             exact
-            path="/courses/:coursename/:semester"
+            path="/courses/:courseCode/:semester/:courseName"
             component={Student}
           />
         </Switch>
