@@ -1,42 +1,107 @@
-.courses {
-  margin-top: 50px;
-  width: 270px;
-  height: 170px;
-  // transition: 0.8s;
-  cursor: pointer;
-  a {
-    text-decoration: none;
-    .MuiPaper {
-      &-root {
-        color: rgba(0, 0, 0, 0.87);
-        transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-        background-color: #fff;
-        width: 270px;
-        height: 200px;
-        border-radius: 10px;
-        transition: 0.8s;
+.outerStudentDashboard {
+  height: 85%;
+  padding: 100px 50px 0 190px;
+  font-family: "Poppins";
+  .Semesters {
+    display: flex;
+    // justify-content: space-between;
+    flex-wrap: wrap;
+    .semester {
+      margin-top: 50px;
+      width: 270px;
+      height: 250px;
+      margin-right: 60px;
+      // transition: 0.8s;
+      cursor: pointer;
+      .MuiPaper {
+        &-root {
+          color: rgba(0, 0, 0, 0.87);
+          transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+          background-color: #fff;
+          width: 270px;
+          height: 250px;
+          border-radius: 10px;
+          transition: 0.8s;
+          display: flex;
+          flex-direction: column;
+          font-family: "Poppins";
+          justify-content: center;
+          align-items: center21;
+        }
+      }
+      :hover {
+        background-color: #3742fa;
+        color: white;
+      }
+      h2 {
         display: flex;
-        flex-direction: column;
-        font-family: "Poppins";
+        justify-content: center;
+      }
+      p {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        margin: 5px 0;
+        // height: 30px;
+        span {
+          font-weight: 700;
+          margin-left: 5px;
+        }
       }
     }
-    :hover {
-      background-color: #3742fa;
-      color: white;
-    }
-    h2 {
-      display: flex;
-      justify-content: center;
-    }
-    p {
-      display: flex;
-      justify-content: center;
-      text-align: center;
-      margin: 5px 0;
-      // height: 30px;
-      span {
-        font-weight: 700;
-        margin-left: 5px;
+  }
+}
+.outerStudentDashboardDark {
+  height: 85%;
+  padding: 100px 50px 0 190px;
+  font-family: "Poppins";
+  background: black;
+  color: white;
+  .Semesters {
+    display: flex;
+    // justify-content: space-between;
+    flex-wrap: wrap;
+    .semester {
+      margin-top: 50px;
+      width: 270px;
+      height: 250px;
+      margin-right: 60px;
+      // transition: 0.8s;
+      cursor: pointer;
+      .MuiPaper {
+        &-root {
+          color: rgba(0, 0, 0, 0.87);
+          transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+          background-color: #fff;
+          width: 270px;
+          height: 250px;
+          border-radius: 10px;
+          transition: 0.8s;
+          display: flex;
+          flex-direction: column;
+          font-family: "Poppins";
+          justify-content: center;
+          align-items: center21;
+        }
+      }
+      :hover {
+        background-color: #3742fa;
+        color: white;
+      }
+      h2 {
+        display: flex;
+        justify-content: center;
+      }
+      p {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        margin: 5px 0;
+        // height: 30px;
+        span {
+          font-weight: 700;
+          margin-left: 5px;
+        }
       }
     }
   }

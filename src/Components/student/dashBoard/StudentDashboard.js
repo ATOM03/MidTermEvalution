@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import SemesterReport from "../semesterReport/SemesterReport";
+import { Switch } from "@material-ui/core";
 
 function StudentDashboard(props) {
   const [semesters, setSemester] = useState([[{}]]);
+  const [darkTheme, setDarkTheme] = useState(false);
   useEffect(() => {
     axios
       .get(`http://localhost:8000/student/${localStorage.getItem("email")}`)
@@ -25,9 +27,25 @@ function StudentDashboard(props) {
       });
   }, []);
   return (
-    <div>
-      <div>Semester Wise Result</div>
+    <div
+      className={
+        darkTheme ? "outerStudentDashboardDark" : "outerStudentDashboard"
+      }
+    >
       <div>
+        <h3>Semester Wise Result</h3>
+        <div>
+          <span>Light </span>
+          <Switch
+            checked={darkTheme}
+            onChange={() => setDarkTheme((prev) => !prev)}
+            name="checkedA"
+            inputProps={{ "aria-label": "primary checkbox" }}
+          />
+          <span>Dark</span>
+        </div>
+      </div>
+      <div className="Semesters">
         {semesters.map((semester, index) => {
           if (semester.length !== 0)
             return <SemesterReport semester={index} data={semester} />;

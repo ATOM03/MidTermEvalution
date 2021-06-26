@@ -27,7 +27,7 @@ function Alert(props) {
 
 function Student(props) {
   const [status, setStatus] = useState(false);
-  const { coursename, semester } = useParams();
+  const { courseName, semester, courseCode } = useParams();
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -46,7 +46,7 @@ function Student(props) {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:8000/student/getStudents/${semester}/${coursename}`
+        `http://localhost:8000/student/getStudents/${semester}/${courseCode}`
       )
       .then((res) => {
         setStatus(true);
@@ -101,7 +101,7 @@ function Student(props) {
               }}
               color="textPrimary"
             >
-              {coursename}
+              {courseCode}
             </Typography>
           </Breadcrumbs>
         </div>
@@ -126,14 +126,18 @@ function Student(props) {
                 <Cell dataKey="rollNo" />
               </Column>
 
-              <Column width={400} resizable>
+              <Column width={250} resizable>
                 <HeaderCell>Email</HeaderCell>
                 <Cell dataKey="email" />
               </Column>
 
-              <Column width={150} resizable>
+              <Column width={100} resizable>
                 <HeaderCell>Course</HeaderCell>
                 <Cell dataKey="course" />
+              </Column>
+              <Column width={200} resizable>
+                <HeaderCell>CourseName</HeaderCell>
+                <Cell dataKey="courseName" />
               </Column>
               <Column width={150} resizable>
                 <HeaderCell>Semseter</HeaderCell>
@@ -228,7 +232,24 @@ function Student(props) {
                   </div>
                   <div className="inputSearch">
                     <InputBase
-                      value={coursename}
+                      value={courseCode}
+                      // type="email"
+                      // classes={{
+                      //   root: classes.root,
+                      // }}
+                      onChange={(e) => setCourse(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <div>
+                    <h4>Course Name</h4>
+                  </div>
+                  <div className="inputSearch">
+                    <InputBase
+                      value={courseName}
                       // type="email"
                       // classes={{
                       //   root: classes.root,
@@ -333,7 +354,8 @@ function Student(props) {
                       name,
                       rollNo,
                       email,
-                      course: coursename,
+                      course: courseCode,
+                      courseName,
                       semester,
                       internalMarks,
                       externalMarks,
