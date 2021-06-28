@@ -192,6 +192,7 @@ function Register(props) {
   const [isTeacher, setIsTeacher] = useState(false);
   const [status, setStatus] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const getData = () => {
     axios
       .post("http://localhost:8000/register", {
@@ -206,8 +207,8 @@ function Register(props) {
         setStatus(res.data.payload.success);
       });
   };
-  const texttopassword = () => {
-    var x = document.getElementById("loginpassword");
+  const texttopassword = (id) => {
+    var x = document.getElementById(id);
     if (x.type === "password") {
       x.type = "text";
     } else {
@@ -279,7 +280,7 @@ function Register(props) {
               <h3>Password</h3>
               <div className={inClassStyle.search}>
                 <InputBase
-                  id="loginpassword"
+                  id="registerPassword"
                   placeholder="Password"
                   classes={{
                     root: inClassStyle.rootInput,
@@ -298,7 +299,7 @@ function Register(props) {
                     <Visibility
                       onClick={() => {
                         setPasswordVisible(false);
-                        texttopassword();
+                        texttopassword("registerPassword");
                       }}
                       classes={{
                         root: inClassStyle.passwordColor,
@@ -310,7 +311,7 @@ function Register(props) {
                     <VisibilityOff
                       onClick={() => {
                         setPasswordVisible(true);
-                        texttopassword();
+                        texttopassword("registerPassword");
                       }}
                     />
                   </div>
@@ -321,7 +322,7 @@ function Register(props) {
               <h3>Confirm Password</h3>
               <div className={inClassStyle.search}>
                 <InputBase
-                  id="loginpassword"
+                  id="registerConfirmPassword"
                   placeholder="Password"
                   classes={{
                     root: inClassStyle.rootInput,
@@ -335,12 +336,12 @@ function Register(props) {
                   }}
                 />
 
-                {passwordVisible ? (
+                {confirmPasswordVisible ? (
                   <div className={inClassStyle.errorDiv}>
                     <Visibility
                       onClick={() => {
-                        setPasswordVisible(false);
-                        texttopassword();
+                        setConfirmPasswordVisible(false);
+                        texttopassword("registerConfirmPassword");
                       }}
                       classes={{
                         root: inClassStyle.passwordColor,
@@ -351,8 +352,8 @@ function Register(props) {
                   <div className={inClassStyle.errorDiv}>
                     <VisibilityOff
                       onClick={() => {
-                        setPasswordVisible(true);
-                        texttopassword();
+                        setConfirmPasswordVisible(true);
+                        texttopassword("registerConfirmPassword");
                       }}
                     />
                   </div>
