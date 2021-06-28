@@ -1,7 +1,47 @@
+.circularProgress {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // margin-right: 59px;
+  padding-top: 40px;
+  padding-right: 190px;
+  padding-left: 190px;
+}
+.headerDark {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 40px;
+  padding-right: 190px;
+  padding-left: 190px;
+  background: black;
+  color: white;
+}
 .outerStudentDashboard {
-  height: 85%;
-  padding: 100px 50px 0 190px;
+  // height: 100%;
+  padding: 10px 50px 100px 190px;
   font-family: "Poppins";
+  .innerStudentDashboard {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    .personalDetailDiv {
+      span {
+        color: #3742fa;
+        margin-left: 5px;
+      }
+    }
+    .BarChart {
+      width: 500px;
+    }
+  }
   .Semesters {
     display: flex;
     // justify-content: space-between;
@@ -52,11 +92,25 @@
   }
 }
 .outerStudentDashboardDark {
-  height: 85%;
-  padding: 100px 50px 0 190px;
+  // height: 85%;
+  padding: 10px 50px 100px 190px;
   font-family: "Poppins";
   background: black;
   color: white;
+  .innerStudentDashboard {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    .personalDetailDiv {
+      span {
+        color: #3742fa;
+        margin-left: 5px;
+      }
+    }
+    .BarChart {
+      width: 500px;
+    }
+  }
   .Semesters {
     display: flex;
     // justify-content: space-between;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { openSemester } from "../../FormCreation/Redux/SemesterOpen/Action";
@@ -28,8 +28,15 @@ function SemesterReport(props) {
   const [open, setOpen] = useState(false);
   const [darkTheme, setDarkTheme] = useState(false);
   const data = props.data;
+
+  useEffect(() => {
+    const label = [];
+    // data.map((elment, index) => {
+    //   console.log(elment, index);
+    // });
+  }, []);
   // data.shift();
-  console.log(props.semester, props.data, open);
+  // console.log(props.semester, props.data, open);
   if (data.length !== 0) {
     return (
       <div className="semester">
