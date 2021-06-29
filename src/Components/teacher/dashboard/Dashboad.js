@@ -31,7 +31,7 @@ function Dashboad(props) {
   const [semester, setSemester] = useState("");
   useEffect(() => {
     axios
-      .get("http://localhost:8000/course")
+      .get(`http://localhost:8000/course/${localStorage.getItem("email")}`)
       .then((res) => {
         setStatus(true);
         const courses = res.data.payload.course;
@@ -162,6 +162,7 @@ function Dashboad(props) {
                       courseCode,
                       courseName,
                       semester,
+                      email: localStorage.getItem("email"),
                     })
                     .then((res) => {
                       console.log(res);

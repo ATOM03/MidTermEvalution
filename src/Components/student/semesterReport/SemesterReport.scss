@@ -31,7 +31,7 @@
   .innerStudentDashboard {
     display: flex;
     justify-content: space-between;
-    width: 90%;
+    width: 96%;
     .personalDetailDiv {
       span {
         color: #3742fa;
@@ -100,7 +100,7 @@
   .innerStudentDashboard {
     display: flex;
     justify-content: space-between;
-    width: 90%;
+    width: 96%;
     .personalDetailDiv {
       span {
         color: #3742fa;
@@ -158,5 +158,16 @@
         }
       }
     }
+  }
+}
+
+.studentSemesterDailogueBox {
+  .MuiDialog {
+    &-root {
+      width: 1100px;
+    }
+  }
+  .MuiDialog-paperScrollPaper {
+    width: 1100px;
   }
 }
