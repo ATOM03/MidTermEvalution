@@ -4,6 +4,7 @@ import SemesterReport from "../semesterReport/SemesterReport";
 import { Bar } from "react-chartjs-2";
 
 import { Switch, CircularProgress } from "@material-ui/core";
+import { Redirect } from "react-router-dom";
 
 function StudentDashboard(props) {
   const [status, setStatus] = useState(false);
@@ -84,66 +85,70 @@ function StudentDashboard(props) {
   };
 
   console.log(label, data);
-  if (status) {
-    return (
-      <div>
-        <div className={darkTheme ? "headerDark" : "header"}>
-          <div>
-            <h1>IPU RESULT</h1>
-          </div>
-          <div>
-            <span>Light </span>
-            <Switch
-              checked={darkTheme}
-              onChange={() => setDarkTheme((prev) => !prev)}
-              name="checkedA"
-              inputProps={{ "aria-label": "primary checkbox" }}
-            />
-            <span>Dark</span>{" "}
-          </div>
-        </div>
-        <div
-          className={
-            darkTheme ? "outerStudentDashboardDark" : "outerStudentDashboard"
-          }
-        >
-          <div className="innerStudentDashboard">
-            <div className="personalDetailDiv">
-              <h4>
-                Name:- <span>{name}</span>
-              </h4>
-              <h4>
-                Roll Number:- <span>{rollNo}</span>
-              </h4>
-              <h4>
-                Overall Percentage :- <span>{overalPercentage} %</span>{" "}
-              </h4>
-            </div>
-            <div className="BarChart">
-              <Bar data={chartData} />
-            </div>
-          </div>
-          <div>
-            {" "}
+  if (localStorage.getItem("token")) {
+    if (status) {
+      return (
+        <div>
+          <div className={darkTheme ? "headerDark" : "header"}>
             <div>
-              <h3>Semester Wise Result</h3>
+              <h1>IPU RESULT</h1>
             </div>
-            <div className="Semesters">
-              {semesters.map((semester, index) => {
-                if (semester.length !== 0)
-                  return <SemesterReport semester={index} data={semester} />;
-              })}
+            <div>
+              <span>Light </span>
+              <Switch
+                checked={darkTheme}
+                onChange={() => setDarkTheme((prev) => !prev)}
+                name="checkedA"
+                inputProps={{ "aria-label": "primary checkbox" }}
+              />
+              <span>Dark</span>{" "}
+            </div>
+          </div>
+          <div
+            className={
+              darkTheme ? "outerStudentDashboardDark" : "outerStudentDashboard"
+            }
+          >
+            <div className="innerStudentDashboard">
+              <div className="personalDetailDiv">
+                <h4>
+                  Name:- <span>{name}</span>
+                </h4>
+                <h4>
+                  Roll Number:- <span>{rollNo}</span>
+                </h4>
+                <h4>
+                  Overall Percentage :- <span>{overalPercentage} %</span>{" "}
+                </h4>
+              </div>
+              <div className="BarChart">
+                <Bar data={chartData} />
+              </div>
+            </div>
+            <div>
+              {" "}
+              <div>
+                <h3>Semester Wise Result</h3>
+              </div>
+              <div className="Semesters">
+                {semesters.map((semester, index) => {
+                  if (semester.length !== 0)
+                    return <SemesterReport semester={index} data={semester} />;
+                })}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="circularProgress">
+          <CircularProgress size={60} />
+        </div>
+      );
+    }
   } else {
-    return (
-      <div className="circularProgress">
-        <CircularProgress size={60} />
-      </div>
-    );
+    return <Redirect to="/" />;
   }
 }
 

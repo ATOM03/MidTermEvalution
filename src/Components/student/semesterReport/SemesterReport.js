@@ -19,24 +19,50 @@ import {
   Breadcrumbs,
   Typography,
   Checkbox,
+  makeStyles,
 } from "@material-ui/core";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 import "./SemesterReport.scss";
 
+const useStyle = makeStyles(() => ({
+  root: {
+    // width: "1100px",
+  },
+  paperScrollPaper: {
+    width: "1200px",
+  },
+  paperWidthSm: {
+    maxWidth: "1300px",
+  },
+}));
+
 function SemesterReport(props) {
+  const classes = useStyle();
   const dispatch = useDispatch();
   // const { open } = useSelector((state) => state.SemesterOpen);
   const [open, setOpen] = useState(false);
   const [darkTheme, setDarkTheme] = useState(false);
   const data = props.data;
 
-  useEffect(() => {
-    const label = [];
-    // data.map((elment, index) => {
-    //   console.log(elment, index);
-    // });
-  }, []);
-  // data.shift();
-  // console.log(props.semester, props.data, open);
+  var totalMarks = 0;
+  data.map((elmenet, index) => {
+    totalMarks += elmenet.externalMarks + elmenet.internalMarks;
+  });
+  var overalpercentage = (totalMarks / (data.length * 100)) * 100;
+  overalpercentage = overalpercentage.toFixed(2);
+  console.log(overalpercentage);
+
+  const downloadData = () => {
+    const doc = new jsPDF("p", "pt", "a2");
+
+    doc.html(document.querySelector("#semesterTable"), {
+      callback: function (pdf) {
+        pdf.save(`${data[0].name}_semester_${data[0].semester}.pdf`);
+      },
+    });
+  };
+
   if (data.length !== 0) {
     return (
       <div className="semester">
@@ -49,199 +75,82 @@ function SemesterReport(props) {
         >
           <h2> Semester :- {props.semester}</h2>
         </Card>
-        <div className="customDialogueBox">
+        <div className="studentSemesterDailogueBox">
           <Dialog
             open={open}
             onClose={() => {
               dispatch(openSemester(false));
               setOpen(false);
             }}
+            classes={{
+              root: classes.root,
+              paperScrollPaper: classes.paperScrollPaper,
+              paperWidthSm: classes.paperWidthSm,
+            }}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            <DialogTitle id="alert-dialog-title"></DialogTitle>
-            <DialogContent>
-              {data.map((semester, index) => (
-                <div>{semester.course}</div>
-              ))}
-            </DialogContent>
-            {/* <DialogContentText id="alert-dialog-description">
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <h4>Student Name</h4>
-                </div>
-                <div className="inputSearch">
-                  <InputBase
-                    value={name}
-                    // classes={{
-                    //   root: classes.root,
-                    // }}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <h4>Roll Number</h4>
-                </div>
-                <div className="inputSearch">
-                  <InputBase
-                    value={rollNo}
-                    // classes={{
-                    //   root: classes.root,
-                    // }}
-                    type="Number"
-                    onChange={(e) => setRollNo(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <h4>Email</h4>
-                </div>
-                <div className="inputSearch">
-                  <InputBase
-                    value={email}
-                    type="email"
-                    // classes={{
-                    //   root: classes.root,
-                    // }}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <h4>Course</h4>
-                </div>
-                <div className="inputSearch">
-                  <InputBase
-                    value={coursename}
-                    // type="email"
-                    // classes={{
-                    //   root: classes.root,
-                    // }}
-                    onChange={(e) => setCourse(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <h4>Semester</h4>
-                </div>
-                <div className="inputSearch">
-                  <InputBase
-                    value={semester}
-                    type="number"
-                    // classes={{
-                    //   root: classes.root,
-                    // }}
-                    onChange={(e) => setSemesterField(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <h4>Internal Marks</h4>
-                </div>
-                <div className="inputSearch">
-                  <InputBase
-                    value={internalMarks}
-                    type="number"
-                    // classes={{
-                    //   root: classes.root,
-                    // }}
-                    onChange={(e) => setInternalMarks(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <h4>External Marks</h4>
-                </div>
-                <div className="inputSearch">
-                  <InputBase
-                    value={externalMarks}
-                    type="number"
-                    // classes={{
-                    //   root: classes.root,
-                    // }}
-                    onChange={(e) => setExternalMarks(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <h4>Attendance</h4>
-                </div>
-                <div className="inputSearch">
-                  <InputBase
-                    value={attendance}
-                    type="number"
-                    // classes={{
-                    //   root: classes.root,
-                    // }}
-                    onChange={(e) => setAttendance(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <h4>Total Classess</h4>
-                </div>
-                <div className="inputSearch">
-                  <InputBase
-                    value={totalClasses}
-                    type="number"
-                    // classes={{
-                    //   root: classes.root,
-                    // }}
-                    onChange={(e) => setTotalClasses(e.target.value)}
-                  />
-                </div>
-              </div>
-            </DialogContentText>
-         
-         </DialogContent> */}
-
-            <DialogActions>
-              <Button
-              // style={{ background: "#3742fa", color: "white" }}
-              // onClick={async () => {
-              //   await axios
-              //     .post("http://localhost:8000/student/addStudent", {
-              //       name,
-              //       rollNo,
-              //       email,
-              //       course: coursename,
-              //       semester,
-              //       internalMarks,
-              //       externalMarks,
-              //       attendance,
-              //       totalClasses,
-              //     })
-              //     .then((res) => {
-              //       console.log(res);
-              //       if (res.data.payload.message) {
-              //         setMessage(res.data.payload.message);
-              //         setIsError(res.data.payload.success);
-              //         setOpenSnackbar(true);
-              //       }
-
-              //       // setCourseCode("");
-              //       // setCourseName("");
-              //       // setSemester("");
-              //       setOpen(false);
-              //     })
-              //     .catch((err) => console.log(err));
-              // }}
-              // color="primary"
+            <DialogTitle id="alert-dialog-title">
+              <div
+                style={{
+                  display: "flex",
+                  // flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
               >
-                Add
+                <h3 style={{ fontFamily: "Poppins", marginBottom: "0px" }}>
+                  Semester :- {data[0].semester}
+                </h3>
+                <h4 style={{ fontFamily: "Poppins", marginBottom: "0px" }}>
+                  Semester Percentage :-{" "}
+                  <span style={{ color: "#3742fa" }}>{overalpercentage} %</span>
+                </h4>
+              </div>
+            </DialogTitle>
+            <DialogContent id="semesterTable">
+              <Table data={data} autoHeight="true">
+                <Column width={140} resizable>
+                  <HeaderCell>Course</HeaderCell>
+                  <Cell dataKey="course" />
+                </Column>
+                <Column width={250} resizable>
+                  <HeaderCell>CourseName</HeaderCell>
+                  <Cell dataKey="courseName" />
+                </Column>
+                <Column width={100} resizable>
+                  <HeaderCell>Semseter</HeaderCell>
+                  <Cell dataKey="semester" />
+                </Column>
+                <Column width={170} resizable>
+                  <HeaderCell>Internal Marks (25)</HeaderCell>
+                  <Cell dataKey="internalMarks" />
+                </Column>
+                <Column width={170} resizable>
+                  <HeaderCell>External Marks (75)</HeaderCell>
+                  <Cell dataKey="externalMarks" />
+                </Column>
+                <Column width={150} resizable>
+                  <HeaderCell>Attendance</HeaderCell>
+                  <Cell dataKey="attendance" />
+                </Column>
+                <Column width={170}>
+                  <HeaderCell>Total Classes</HeaderCell>
+                  <Cell dataKey="totalClasses" />
+                </Column>
+              </Table>
+            </DialogContent>
+
+            <DialogActions style={{ marginTop: "10px" }}>
+              <Button
+                style={{ background: "#3742fa", color: "white" }}
+                onClick={downloadData}
+                color="primary"
+              >
+                Download Data
               </Button>
               <Button
                 style={{ background: "#3742fa", color: "white" }}
-                // onClick={() => setOpen(false)}
+                onClick={() => setOpen(false)}
                 color="primary"
                 autoFocus
               >

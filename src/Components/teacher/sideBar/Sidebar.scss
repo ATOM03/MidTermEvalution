@@ -66,4 +66,17 @@
       color: #3742fa;
     }
   }
+  .loggout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 700px;
+    .MuiButton {
+      &-root {
+        font-size: 20px;
+        font-weight: 600;
+        font-family: "Poppins";
+      }
+    }
+  }
 }
