@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import axios from "axios";
+import "./Register.scss";
 
 const useStyle = makeStyles((theme) => ({
   loginButton: {
@@ -217,171 +218,194 @@ function Register(props) {
   };
   if (status === false) {
     return (
-      <div className={inClassStyle.Flexbox}>
-        <Card
-          classes={{
-            root: inClassStyle.Card,
-          }}
-        >
-          <form className={inClassStyle.loginForm}>
-            <h1>Sign In</h1>
-            <div className={inClassStyle.inputFlexColumn}>
-              <h3>FirstName</h3>
-              <div className={inClassStyle.search}>
-                <InputBase
-                  placeholder="Username"
-                  classes={{
-                    root: inClassStyle.rootInput,
-                    input: inClassStyle.input,
-                  }}
-                  value={firstName}
-                  inputProps={{ "aria-label": "search" }}
-                  onChange={(e) => {
-                    setFirstName(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
-            <div className={inClassStyle.inputFlexColumn}>
-              <h3>LastName</h3>
-              <div className={inClassStyle.search}>
-                <InputBase
-                  placeholder="Username"
-                  classes={{
-                    root: inClassStyle.rootInput,
-                    input: inClassStyle.input,
-                  }}
-                  value={lastName}
-                  inputProps={{ "aria-label": "search" }}
-                  onChange={(e) => {
-                    setLastName(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
-            <div className={inClassStyle.inputFlexColumn}>
-              <h3>Eamil</h3>
-              <div className={inClassStyle.search}>
-                <InputBase
-                  placeholder="Username"
-                  classes={{
-                    root: inClassStyle.rootInput,
-                    input: inClassStyle.input,
-                  }}
-                  value={email}
-                  inputProps={{ "aria-label": "search" }}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
-            <div className={inClassStyle.inputFlexColumn}>
-              <h3>Password</h3>
-              <div className={inClassStyle.search}>
-                <InputBase
-                  id="registerPassword"
-                  placeholder="Password"
-                  classes={{
-                    root: inClassStyle.rootInput,
-                    input: inClassStyle.input,
-                  }}
-                  value={password}
-                  type="password"
-                  inputProps={{ "aria-label": "password" }}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                />
+      <div style={{ width: "100%", height: "100%" }}>
+        <div className="outerRegisterForm">
+          <Card raised="true">
+            <div className="innerRegisterForm">
+              <div className="innerRegisterFormText">
+                <div style={{ padding: "0 40px" }}>
+                  <h3>Hello Everyone and Welcome :)</h3>
+                  <p>
+                    Students and Teacher can use their email id for the login
+                  </p>
 
-                {passwordVisible ? (
-                  <div className={inClassStyle.errorDiv}>
-                    <Visibility
-                      onClick={() => {
-                        setPasswordVisible(false);
-                        texttopassword("registerPassword");
-                      }}
-                      classes={{
-                        root: inClassStyle.passwordColor,
-                      }}
-                    />
+                  <div
+                    className="SignUP"
+                    style={{
+                      flexDirection: "row",
+                      width: "85%",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    {" "}
+                    <p>Don't have an Account ?</p>
+                    <Link to="/register">
+                      <Button> {/* <ArrowForwardIosIcon /> */}</Button>
+                    </Link>
                   </div>
-                ) : (
-                  <div className={inClassStyle.errorDiv}>
-                    <VisibilityOff
-                      onClick={() => {
-                        setPasswordVisible(true);
-                        texttopassword("registerPassword");
-                      }}
-                    />
-                  </div>
-                )}
+                </div>
               </div>
-            </div>
-            <div className={inClassStyle.inputFlexColumn}>
-              <h3>Confirm Password</h3>
-              <div className={inClassStyle.search}>
-                <InputBase
-                  id="registerConfirmPassword"
-                  placeholder="Password"
-                  classes={{
-                    root: inClassStyle.rootInput,
-                    input: inClassStyle.input,
-                  }}
-                  value={confirmPassword}
-                  type="password"
-                  inputProps={{ "aria-label": "password" }}
-                  onChange={(e) => {
-                    setConfirmPassword(e.target.value);
-                  }}
-                />
+              <form className={inClassStyle.loginForm}>
+                <h1>Sign In</h1>
+                <div className={inClassStyle.inputFlexColumn}>
+                  <h3>FirstName</h3>
+                  <div className={inClassStyle.search}>
+                    <InputBase
+                      placeholder="Username"
+                      classes={{
+                        root: inClassStyle.rootInput,
+                        input: inClassStyle.input,
+                      }}
+                      value={firstName}
+                      inputProps={{ "aria-label": "search" }}
+                      onChange={(e) => {
+                        setFirstName(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className={inClassStyle.inputFlexColumn}>
+                  <h3>LastName</h3>
+                  <div className={inClassStyle.search}>
+                    <InputBase
+                      placeholder="Username"
+                      classes={{
+                        root: inClassStyle.rootInput,
+                        input: inClassStyle.input,
+                      }}
+                      value={lastName}
+                      inputProps={{ "aria-label": "search" }}
+                      onChange={(e) => {
+                        setLastName(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className={inClassStyle.inputFlexColumn}>
+                  <h3>Eamil</h3>
+                  <div className={inClassStyle.search}>
+                    <InputBase
+                      placeholder="Username"
+                      classes={{
+                        root: inClassStyle.rootInput,
+                        input: inClassStyle.input,
+                      }}
+                      value={email}
+                      inputProps={{ "aria-label": "search" }}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className={inClassStyle.inputFlexColumn}>
+                  <h3>Password</h3>
+                  <div className={inClassStyle.search}>
+                    <InputBase
+                      id="registerPassword"
+                      placeholder="Password"
+                      classes={{
+                        root: inClassStyle.rootInput,
+                        input: inClassStyle.input,
+                      }}
+                      value={password}
+                      type="password"
+                      inputProps={{ "aria-label": "password" }}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                    />
 
-                {confirmPasswordVisible ? (
-                  <div className={inClassStyle.errorDiv}>
-                    <Visibility
-                      onClick={() => {
-                        setConfirmPasswordVisible(false);
-                        texttopassword("registerConfirmPassword");
-                      }}
+                    {passwordVisible ? (
+                      <div className={inClassStyle.errorDiv}>
+                        <Visibility
+                          onClick={() => {
+                            setPasswordVisible(false);
+                            texttopassword("registerPassword");
+                          }}
+                          classes={{
+                            root: inClassStyle.passwordColor,
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <div className={inClassStyle.errorDiv}>
+                        <VisibilityOff
+                          onClick={() => {
+                            setPasswordVisible(true);
+                            texttopassword("registerPassword");
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className={inClassStyle.inputFlexColumn}>
+                  <h3>Confirm Password</h3>
+                  <div className={inClassStyle.search}>
+                    <InputBase
+                      id="registerConfirmPassword"
+                      placeholder="Password"
                       classes={{
-                        root: inClassStyle.passwordColor,
+                        root: inClassStyle.rootInput,
+                        input: inClassStyle.input,
+                      }}
+                      value={confirmPassword}
+                      type="password"
+                      inputProps={{ "aria-label": "password" }}
+                      onChange={(e) => {
+                        setConfirmPassword(e.target.value);
                       }}
                     />
+
+                    {confirmPasswordVisible ? (
+                      <div className={inClassStyle.errorDiv}>
+                        <Visibility
+                          onClick={() => {
+                            setConfirmPasswordVisible(false);
+                            texttopassword("registerConfirmPassword");
+                          }}
+                          classes={{
+                            root: inClassStyle.passwordColor,
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <div className={inClassStyle.errorDiv}>
+                        <VisibilityOff
+                          onClick={() => {
+                            setConfirmPasswordVisible(true);
+                            texttopassword("registerConfirmPassword");
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  <div className={inClassStyle.errorDiv}>
-                    <VisibilityOff
-                      onClick={() => {
-                        setConfirmPasswordVisible(true);
-                        texttopassword("registerConfirmPassword");
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
+                </div>
+                <div>
+                  <Checkbox
+                    checked={isTeacher}
+                    onChange={() => setIsTeacher((prev) => !prev)}
+                    color="primary"
+                    inputProps={{ "aria-label": "primary checkbox" }}
+                  />
+                  Are you a Teacher?
+                </div>
+                <div className={inClassStyle.LoginButton}>
+                  <Button
+                    variant="contained"
+                    classes={{
+                      root: inClassStyle.loginbuttonStyle,
+                    }}
+                    onClick={getData}
+                  >
+                    Register
+                  </Button>
+                </div>
+              </form>
             </div>
-            <div>
-              <Checkbox
-                checked={isTeacher}
-                onChange={() => setIsTeacher((prev) => !prev)}
-                color="primary"
-                inputProps={{ "aria-label": "primary checkbox" }}
-              />
-              Are you a Teacher?
-            </div>
-            <div className={inClassStyle.LoginButton}>
-              <Button
-                variant="contained"
-                classes={{
-                  root: inClassStyle.loginbuttonStyle,
-                }}
-                onClick={getData}
-              >
-                Register
-              </Button>
-            </div>
-          </form>
-        </Card>
+          </Card>
+        </div>
       </div>
     );
   } else if (status === true) {

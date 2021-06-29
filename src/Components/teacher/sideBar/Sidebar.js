@@ -23,26 +23,6 @@ function Sidebar(props) {
           <h2>IPU</h2>
           <div className="MenuItems">
             <MenuList>
-              {/* <MenuItem
-              onClick={() => {
-                setCourseActive(!courseActive);
-                setAddStudentActive(false);
-                setGenerateReportActive(false);
-              }}
-            >
-              <ImportContactsIcon className={courseActive ? "active" : ""} />
-              <h4>Add Course</h4>
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                setCourseActive(false);
-                setAddStudentActive(!addStudentActive);
-                setGenerateReportActive(false);
-              }}
-            >
-              <PersonAddIcon className={addStudentActive ? "active" : ""} />
-              <h4>Add Student</h4>
-            </MenuItem> */}
               <MenuItem
                 onClick={() => {
                   setCourseActive(false);
