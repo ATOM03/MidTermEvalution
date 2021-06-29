@@ -9,6 +9,7 @@ import {
   Snackbar,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import MuiAlert from "@material-ui/lab/Alert";
 import axios from "axios";
 import "./Login.scss";
@@ -46,7 +47,7 @@ const useStyle = makeStyles((theme) => ({
     width: "100%",
     height: "10px",
     padding: "7px",
-    borderRadius: "8px",
+    borderRadius: "5px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -75,8 +76,9 @@ const useStyle = makeStyles((theme) => ({
     // alignItems: "center",
     marginTop: "15px",
     "& h3": {
-      margin: "0 0 4px 13px",
-      fontSize: "14px",
+      margin: "0 0 4px 5px",
+      fontSize: "12px",
+      fontWeight: 400,
     },
   },
   root: {
@@ -91,7 +93,7 @@ const useStyle = makeStyles((theme) => ({
     fontFamily: "poppins",
   },
   LoginButton: {
-    marginTop: "30px",
+    marginTop: "40px",
     width: "40%",
     display: "flex",
     justifyContent: "center",
@@ -162,18 +164,21 @@ const useStyle = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    fontFamily: "Poppins",
+    height: "92%",
     "& h1": {
       width: "100%",
       display: "flex",
       justifyContent: "center",
       margin: "20px 0 10px 0",
+      letterSpacing: "2px",
     },
   },
   search: {
     // width: "50%",
     height: "40px",
     display: "flex",
-    borderRadius: "15px",
+    borderRadius: "8px",
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.25),
@@ -193,30 +198,41 @@ function Login(props) {
 
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [openError, setOpenError] = useState(false);
+  const [messageError, setMessageError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [isTeacher, setIsTeacher] = useState(false);
   const getData = () => {
-    axios
-      .post("http://localhost:8000/login", { email, password })
-      .then((res) => {
-        if (!res.data.payload.success) {
-          setMessage(res.data.payload.message);
+    if (email === "") {
+      setOpenError(true);
+      setMessageError("Enter the Email");
+    } else if (password === "") {
+      setOpenError(true);
+      setMessageError("Enter the Password");
+    }
+    if (email !== "" && password !== "") {
+      axios
+        .post("http://localhost:8000/login", { email, password })
+        .then((res) => {
+          if (!res.data.payload.success) {
+            setMessage(res.data.payload.message);
+            setOpen(true);
+          } else {
+            setIsTeacher(res.data.payload.isTeacher);
+            setStatus(res.data.payload.success);
+            localStorage.setItem("token", res.data.payload.token);
+            localStorage.setItem("email", email);
+          }
+        })
+        .catch((res) => {
+          console.log(res);
+          setMessage(res);
           setOpen(true);
-        } else {
-          setIsTeacher(res.data.payload.isTeacher);
-          setStatus(res.data.payload.success);
-          localStorage.setItem("token", res.data.payload.token);
-          localStorage.setItem("email", email);
-        }
-      })
-      .catch((res) => {
-        console.log(res);
-        setMessage(res);
-        setOpen(true);
-      });
+        });
+    }
   };
   const texttopassword = () => {
     var x = document.getElementById("loginpassword");
@@ -230,100 +246,129 @@ function Login(props) {
   console.log(isTeacher, status);
   if (status === false) {
     return (
-      <div className={inClassStyle.Flexbox}>
-        <Card
-          classes={{
-            root: inClassStyle.Card,
-          }}
-        >
-          <form className={inClassStyle.loginForm}>
-            <h1>Sign In</h1>
-            <div className={inClassStyle.inputFlexColumn}>
-              <h3>Email</h3>
-              <div className={inClassStyle.search}>
-                <InputBase
-                  placeholder="Username"
-                  classes={{
-                    root: inClassStyle.rootInput,
-                    input: inClassStyle.input,
-                  }}
-                  value={email}
-                  inputProps={{ "aria-label": "search" }}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
-            <div className={inClassStyle.inputFlexColumn}>
-              <h3>Password</h3>
-              <div className={inClassStyle.search}>
-                <InputBase
-                  id="loginpassword"
-                  placeholder="Password"
-                  classes={{
-                    root: inClassStyle.rootInput,
-                    input: inClassStyle.input,
-                  }}
-                  value={password}
-                  type="password"
-                  inputProps={{ "aria-label": "password" }}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                />
+      <div style={{ width: "100%", height: "100%" }}>
+        <div className="outerLoginForm">
+          <Card raised="true">
+            <div className="innerloginform">
+              <div className="innerLoginFormText">
+                <div>
+                  <h3>Hello Everyone and Welcome :)</h3>
+                  <p>
+                    Students and Teacher can use their email id for the login
+                  </p>
 
-                {passwordVisible ? (
-                  <div className={inClassStyle.errorDiv}>
-                    <Visibility
-                      onClick={() => {
-                        setPasswordVisible(false);
-                        texttopassword();
-                      }}
-                      classes={{
-                        root: inClassStyle.passwordColor,
-                      }}
-                    />
+                  <div
+                    className="SignUP"
+                    style={{
+                      flexDirection: "row",
+                      width: "85%",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    {" "}
+                    <p>Don't have an Account ?</p>
+                    <Link to="/register">
+                      <Button>
+                        {" "}
+                        <ArrowForwardIosIcon />
+                      </Button>
+                    </Link>
                   </div>
-                ) : (
-                  <div className={inClassStyle.errorDiv}>
-                    <VisibilityOff
-                      onClick={() => {
-                        setPasswordVisible(true);
-                        texttopassword();
-                      }}
-                    />
-                  </div>
-                )}
+                </div>
               </div>
+              <form className={inClassStyle.loginForm}>
+                <h1>Login </h1>
+                <div className={inClassStyle.inputFlexColumn}>
+                  <h3>Email</h3>
+                  <div className={inClassStyle.search}>
+                    <InputBase
+                      placeholder="Username"
+                      classes={{
+                        root: inClassStyle.rootInput,
+                        input: inClassStyle.input,
+                      }}
+                      value={email}
+                      inputProps={{ "aria-label": "search" }}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className={inClassStyle.inputFlexColumn}>
+                  <h3>Password</h3>
+                  <div className={inClassStyle.search}>
+                    <InputBase
+                      id="loginpassword"
+                      placeholder="Password"
+                      classes={{
+                        root: inClassStyle.rootInput,
+                        input: inClassStyle.input,
+                      }}
+                      value={password}
+                      type="password"
+                      inputProps={{ "aria-label": "password" }}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                    />
+
+                    {passwordVisible ? (
+                      <div className={inClassStyle.errorDiv}>
+                        <Visibility
+                          onClick={() => {
+                            setPasswordVisible(false);
+                            texttopassword();
+                          }}
+                          classes={{
+                            root: inClassStyle.passwordColor,
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <div className={inClassStyle.errorDiv}>
+                        <VisibilityOff
+                          onClick={() => {
+                            setPasswordVisible(true);
+                            texttopassword();
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className={inClassStyle.LoginButton}>
+                  <Button onClick={getData}>Login</Button>
+                </div>
+              </form>
             </div>
-            <div className="SignUP">
-              <Link to="/register">Sign up</Link>
-            </div>
-            <div className={inClassStyle.LoginButton}>
-              <Button
-                variant="contained"
-                classes={{
-                  root: inClassStyle.loginbuttonStyle,
-                }}
-                onClick={getData}
-              >
-                Login
-              </Button>
-            </div>
-          </form>
-        </Card>
+          </Card>
+        </div>
         <Snackbar
           open={open}
           autoHideDuration={6000}
           onClose={() => setOpen(false)}
           anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
+            vertical: "top",
+            horizontal: "right",
           }}
         >
           <Alert onClose={() => setOpen(false)} severity="error">
             {message}
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={() => setOpenError(false)}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <Alert onClose={() => setOpenError(false)} severity="error">
+            {messageError}
           </Alert>
         </Snackbar>
       </div>
