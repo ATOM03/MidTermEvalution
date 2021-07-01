@@ -7,10 +7,17 @@ import {
   makeStyles,
   fade,
   Checkbox,
+  Snackbar,
 } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import axios from "axios";
 import "./Register.scss";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyle = makeStyles((theme) => ({
   loginButton: {
@@ -70,8 +77,9 @@ const useStyle = makeStyles((theme) => ({
     // alignItems: "center",
     marginTop: "15px",
     "& h3": {
-      margin: "0 0 4px 13px",
-      fontSize: "14px",
+      margin: "0 0 4px 8px",
+      fontSize: "12px",
+      fontWeight: "400",
     },
   },
   root: {
@@ -86,48 +94,20 @@ const useStyle = makeStyles((theme) => ({
     fontFamily: "poppins",
   },
   LoginButton: {
-    marginTop: "30px",
+    marginTop: "15px",
     width: "40%",
     display: "flex",
     justifyContent: "center",
   },
   loginbuttonStyle: {
-    width: "100%",
-    height: "50px",
+    width: "140px",
+    height: "45px",
     padding: "6px 16px",
     backgroundColor: " #2CFFEF",
     color: "black",
-    borderRadius: "20px",
-    fontFamily: "arial",
-  },
-  orFooter: {
-    display: "flex",
-    flexBasis: "100%",
-    alignItems: "center",
-    color: "white",
-    margin: "40px 0 30px 0",
-    width: "100%",
-    "&::before,&::after": {
-      content: "''",
-      flexGrow: "1",
-      background: "grey",
-      height: "1px",
-      fontSize: "0px",
-      lineHeight: "1px",
-      margin: "0px 8px",
-    },
-  },
-  RegImg: {
-    display: "flex",
-    justifyContent: "flex-end",
-    width: "100%",
-    height: "89%",
-    marginTop: "35px",
-    "& img": {
-      width: "80%",
-      height: "79%",
-      marginLeft: "50px",
-    },
+    borderRadius: "8px",
+    fontFamily: "Poppins",
+    fontWeight: "600",
   },
   Flexbox: {
     width: "100%",
@@ -162,13 +142,14 @@ const useStyle = makeStyles((theme) => ({
       display: "flex",
       justifyContent: "center",
       margin: "20px 0 10px 0",
+      letterSpacing: "1px",
     },
   },
   search: {
     // width: "50%",
     height: "40px",
     display: "flex",
-    borderRadius: "15px",
+    borderRadius: "8px",
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.25),
@@ -185,6 +166,8 @@ const useStyle = makeStyles((theme) => ({
 
 function Register(props) {
   const inClassStyle = useStyle();
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -195,18 +178,44 @@ function Register(props) {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const getData = () => {
-    axios
-      .post("http://localhost:8000/register", {
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmPassword,
-        isTeacher,
-      })
-      .then((res) => {
-        setStatus(res.data.payload.success);
-      });
+    if (firstName === "") {
+      setOpen(true);
+      setMessage("Enter The First Name");
+    } else if (lastName === "") {
+      setOpen(true);
+      setMessage("Enter The Last Name");
+    } else if (email === "") {
+      setOpen(true);
+      setMessage("Enter The Email");
+    } else if (password === "") {
+      setOpen(true);
+      setMessage("Enter The First Name");
+    } else if (confirmPassword === "") {
+      setOpen(true);
+      setMessage("Enter The First Name");
+    } else {
+      axios
+        .post("http://localhost:8000/register", {
+          firstName,
+          lastName,
+          email,
+          password,
+          confirmPassword,
+          isTeacher,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data.payload) {
+            setStatus(res.data.payload.success);
+          } else {
+            setOpen(true);
+            setMessage(res.data.message);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
   const texttopassword = (id) => {
     var x = document.getElementById(id);
@@ -225,33 +234,40 @@ function Register(props) {
               <div className="innerRegisterFormText">
                 <div style={{ padding: "0 40px" }}>
                   <h3>Hello Everyone and Welcome :)</h3>
-                  <p>
-                    Students and Teacher can use their email id for the login
-                  </p>
+                  <ul style={{ padding: "5px 0 0 16px" }}>
+                    <li>
+                      <p>
+                        If you are a Student don't tick mark the checkbox of
+                        'Are you teacher'
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        If you are a Teacher ,Please tick mark the checkbox of
+                        'Are you teacher'
+                      </p>
+                    </li>
+                  </ul>
 
-                  <div
-                    className="SignUP"
-                    style={{
-                      flexDirection: "row",
-                      width: "85%",
-                      justifyContent: "space-between",
-                    }}
-                  >
+                  <div className="LogIN">
                     {" "}
-                    <p>Don't have an Account ?</p>
-                    <Link to="/register">
-                      <Button> {/* <ArrowForwardIosIcon /> */}</Button>
+                    <p>Already have a Account ?</p>
+                    <Link to="/">
+                      <Button>
+                        {" "}
+                        <ArrowBackIosIcon />
+                      </Button>
                     </Link>
                   </div>
                 </div>
               </div>
-              <form className={inClassStyle.loginForm}>
-                <h1>Sign In</h1>
+              <form className={inClassStyle.loginForm} id="registerForm">
+                <h1>Register</h1>
                 <div className={inClassStyle.inputFlexColumn}>
-                  <h3>FirstName</h3>
+                  <h3>First Name</h3>
                   <div className={inClassStyle.search}>
                     <InputBase
-                      placeholder="Username"
+                      placeholder="First Name"
                       classes={{
                         root: inClassStyle.rootInput,
                         input: inClassStyle.input,
@@ -265,10 +281,10 @@ function Register(props) {
                   </div>
                 </div>
                 <div className={inClassStyle.inputFlexColumn}>
-                  <h3>LastName</h3>
+                  <h3>Last Name</h3>
                   <div className={inClassStyle.search}>
                     <InputBase
-                      placeholder="Username"
+                      placeholder="Last Name"
                       classes={{
                         root: inClassStyle.rootInput,
                         input: inClassStyle.input,
@@ -282,10 +298,10 @@ function Register(props) {
                   </div>
                 </div>
                 <div className={inClassStyle.inputFlexColumn}>
-                  <h3>Eamil</h3>
+                  <h3>Email</h3>
                   <div className={inClassStyle.search}>
                     <InputBase
-                      placeholder="Username"
+                      placeholder="Email"
                       classes={{
                         root: inClassStyle.rootInput,
                         input: inClassStyle.input,
@@ -303,7 +319,7 @@ function Register(props) {
                   <div className={inClassStyle.search}>
                     <InputBase
                       id="registerPassword"
-                      placeholder="Password"
+                      placeholder="********"
                       classes={{
                         root: inClassStyle.rootInput,
                         input: inClassStyle.input,
@@ -345,7 +361,7 @@ function Register(props) {
                   <div className={inClassStyle.search}>
                     <InputBase
                       id="registerConfirmPassword"
-                      placeholder="Password"
+                      placeholder="*********"
                       classes={{
                         root: inClassStyle.rootInput,
                         input: inClassStyle.input,
@@ -382,21 +398,20 @@ function Register(props) {
                     )}
                   </div>
                 </div>
-                <div>
+                <div className="teacherCheckbox">
                   <Checkbox
                     checked={isTeacher}
                     onChange={() => setIsTeacher((prev) => !prev)}
-                    color="primary"
                     inputProps={{ "aria-label": "primary checkbox" }}
                   />
                   Are you a Teacher?
                 </div>
-                <div className={inClassStyle.LoginButton}>
+                <div className={inClassStyle.LoginButton} id="RegisterButton">
                   <Button
-                    variant="contained"
-                    classes={{
-                      root: inClassStyle.loginbuttonStyle,
-                    }}
+                    // variant="contained"
+                    // classes={{
+                    //   root: inClassStyle.loginbuttonStyle,
+                    // }}
                     onClick={getData}
                   >
                     Register
@@ -406,6 +421,19 @@ function Register(props) {
             </div>
           </Card>
         </div>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={() => setOpen(false)}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <Alert onClose={() => setOpen(false)} severity="error">
+            {message}
+          </Alert>
+        </Snackbar>
       </div>
     );
   } else if (status === true) {
