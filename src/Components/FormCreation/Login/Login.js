@@ -282,7 +282,7 @@ function Login(props) {
                   <h3>Email</h3>
                   <div className={inClassStyle.search}>
                     <InputBase
-                      placeholder="Username"
+                      placeholder="Email"
                       classes={{
                         root: inClassStyle.rootInput,
                         input: inClassStyle.input,

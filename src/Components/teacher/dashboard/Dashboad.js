@@ -19,6 +19,13 @@ const useStyle = makeStyles((theme) => ({
   root: {
     backgroundColor: "rgba(255, 255, 255, 0.15);",
   },
+  paperScrollPaper: {
+    background: "#1d2e3b",
+    color: "white",
+    fontFamily: "Poppins",
+    borderRadius: "10px",
+    padding: "20px",
+  },
 }));
 
 function Dashboad(props) {
@@ -46,7 +53,15 @@ function Dashboad(props) {
   console.log(courses);
   if (status === false) {
     return (
-      <div>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <CircularProgress />
       </div>
     );
@@ -96,6 +111,7 @@ function Dashboad(props) {
             onClose={() => setOpen(false)}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
+            classes={{ paperScrollPaper: classes.paperScrollPaper }}
           >
             <DialogTitle id="alert-dialog-title">
               <h3 style={{ margin: "0" }}>Add a New Course</h3>
@@ -103,7 +119,12 @@ function Dashboad(props) {
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
                 <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    color: "white",
+                    fontFamily: "Poppins",
+                  }}
                 >
                   <div>
                     <h4>Course Name</h4>
@@ -119,7 +140,12 @@ function Dashboad(props) {
                   </div>
                 </div>
                 <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    color: "white",
+                    fontFamily: "Poppins",
+                  }}
                 >
                   <div>
                     <h4>Course Code</h4>
@@ -135,7 +161,12 @@ function Dashboad(props) {
                   </div>
                 </div>
                 <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    color: "white",
+                    fontFamily: "Poppins",
+                  }}
                 >
                   <div>
                     <h4>Semester</h4>
@@ -155,7 +186,7 @@ function Dashboad(props) {
             </DialogContent>
             <DialogActions>
               <Button
-                style={{ background: "#3742fa", color: "white" }}
+                style={{ background: "#2cffef", color: "black" }}
                 onClick={async () => {
                   await axios
                     .post("http://localhost:8000/course/addCourse", {
@@ -177,7 +208,7 @@ function Dashboad(props) {
                 Add
               </Button>
               <Button
-                style={{ background: "#3742fa", color: "white" }}
+                style={{ background: "#2cffef", color: "black" }}
                 onClick={() => setOpen(false)}
                 color="primary"
                 autoFocus
